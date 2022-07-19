@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  comments_count :integer          default(0), not null
+#  likes_count    :integer          default(0), not null
 #  tagline        :string           not null
 #  title          :string           not null
 #  url            :string           not null
@@ -22,6 +23,7 @@
 class Post < ApplicationRecord
   belongs_to :user, required: true, inverse_of: :posts
   has_many :comments, dependent: :destroy, inverse_of: :post
+  has_many :likes, dependent: :destroy, inverse_of: :post
 
   validates :title, :tagline, presence: true
   validates :url, url: true, presence: true

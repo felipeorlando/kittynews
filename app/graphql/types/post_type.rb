@@ -6,5 +6,6 @@ module Types
     field :url, String, null: false
     field :user, UserType, null: false
     field :comments_count, Int, null: false
+    field :likes_count, Int, null: false
   end
 end
