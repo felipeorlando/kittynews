@@ -7,5 +7,6 @@ module Types
     field :user, UserType, null: false
     field :comments_count, Int, null: false
     field :likes_count, Int, null: false
+    field :liked_by_current_user, Boolean, null: true
   end
 end

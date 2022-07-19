@@ -29,4 +29,17 @@ class Post < ApplicationRecord
   validates :url, url: true, presence: true
 
   scope :reverse_chronological, -> { order(arel_table[:created_at].desc) }
+  
+  scope :with_liked_field_from_user, lambda { |user_id|
+    joins(sanitize_sql_array(["LEFT OUTER JOIN likes ON likes.post_id = posts.id AND likes.user_id = ?", user_id]))
+      .distinct
+      .select('posts.*, COUNT(likes.*) AS liked_by_caller')
+      .group('posts.id')
+  }
+
+  def liked_by_current_user
+    return nil unless self.respond_to?(:liked_by_caller)
+    
+    self.liked_by_caller > 0
+  end
 end
