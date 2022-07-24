@@ -10,7 +10,7 @@ module Mutations
     def resolve(name:)
       require_current_user!
 
-      user = context[:current_user]
+      user = current_user
 
       if user.update name: name
         {

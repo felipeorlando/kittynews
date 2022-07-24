@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe Mutations::UserUpdate do
-  let(:object) { :not_used }
-  let(:user) { create :user, name: 'name' }
+  let!(:user) { create :user, name: 'name' }
 
   def call(current_user:, context: {}, **args)
     context = Utils::Context.new(
