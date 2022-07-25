@@ -1,15 +1,19 @@
 import * as React from 'react';
+import CreateComment from '../../components/CreateComment';
 import Post from '../../components/Post';
 import { usePostByIdQuery } from '../../graphql/queries/postById';
 import renderComponent from '../../utils/renderComponent';
 
 function PostsShow({ postId }) {
-  const { data, error, loading } = usePostByIdQuery(+postId);
+  const postIdInt = +postId;
+  const { data, error, loading } = usePostByIdQuery(postIdInt);
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
   const { postById: post, viewer } = data;
+
+  const isLoggedIn = !!viewer;
 
   return (
     <>
@@ -19,33 +23,30 @@ function PostsShow({ postId }) {
           commentsCount={post.commentsCount}
           forShow
           isLiked={post.likedByCurrentUser}
-          isLoggedIn={viewer !== null}
+          isLoggedIn={isLoggedIn}
           likesCount={post.likesCount}
-          postId={+post.id}
+          postId={postIdInt}
           tagline={post.tagline}
           title={post.title}
           url={post.url}
         />
       </div>
-      <div className="box">
-        <h3>Comments</h3>
+      {(isLoggedIn || post.commentsCount > 0) && (
+        <div className="box" id="comments">
+          <h3>Comments</h3>
 
-        {post.comments.map((comment) => (
-          <div className="comment" key={comment.id}>
-            <strong>{comment.user.name}</strong>
-            <p>{comment.text}</p>
+          <div id="comments-list">
+            {post.comments.map((comment) => (
+              <div className="comment" key={comment.id}>
+                <strong>{comment.user.name}</strong>
+                <p>{comment.text}</p>
+              </div>
+            ))}
           </div>
-        ))}
 
-        <form className="comment">
-          <textarea
-            name="comment"
-            placeholder="Add a comment..."
-            rows={4}
-          />
-          <button className="submit">Add comment</button>
-        </form>
-      </div>
+          {isLoggedIn && <CreateComment postId={postIdInt} />}
+        </div>
+      )}
     </>
   );
 }

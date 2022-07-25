@@ -15,6 +15,7 @@ export const POST_BY_ID = gql`
       likesCount
       likedByCurrentUser
       comments {
+        id
         text
         createdAt
         user {
