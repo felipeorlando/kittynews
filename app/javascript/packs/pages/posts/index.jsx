@@ -1,29 +1,14 @@
 import * as React from 'react';
-import gql from 'graphql-tag';
-import { useQuery } from 'react-apollo';
-import renderComponent from './utils/renderComponent';
-
-const QUERY = gql`
-  query PostsPage {
-    viewer {
-      id
-    }
-    postsAll {
-      id
-      title
-      tagline
-      url
-      commentsCount
-    }
-  }
-`;
+import renderComponent from '../../utils/renderComponent';
+import LikeAction from '../../components/LikeAction';
+import { usePostsAllQuery } from '../../graphql/queries/postsAll';
 
 function PostsIndex() {
-  const { data, loading, error } = useQuery(QUERY);
+  const { data, loading, error } = usePostsAllQuery();
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
-
+  
   return (
     <div className="box">
       {data.postsAll.map((post) => (
@@ -36,8 +21,13 @@ function PostsIndex() {
           </div>
           <div className="tagline">{post.tagline}</div>
           <footer>
-            <button>🔼 0 </button>
-            <button>💬 {post.commentsCount}</button>
+            <LikeAction
+              count={post.likesCount}
+              isLiked={post.likedByCurrentUser}
+              isLogged={data.viewer !== null}
+              postId={+post.id}
+            />
+            <button className="action">💬 {post.commentsCount}</button>
           </footer>
         </article>
       ))}

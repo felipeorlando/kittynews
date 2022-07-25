@@ -7,4 +7,17 @@ module Helpers
     )
     described_class.new(object: nil, context: context, field: nil).resolve(args)
   end
+
+  def login(email:, password:)
+    visit root_path
+    click_on 'Login'
+
+    fill_in 'Email', with: email
+    fill_in 'Password', with: password
+    click_on 'Log in'
+  end
+
+  def logout
+    click_on 'Logout'
+  end
 end

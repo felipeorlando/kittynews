@@ -1,16 +1,6 @@
 require 'rails_helper'
 
-feature 'Posts' do
-  scenario 'Displaying the posts on the homepage', js: true do
-    post_1 = create :post
-    post_2 = create :post
-
-    visit root_path
-
-    expect(page).to have_content post_1.title
-    expect(page).to have_content post_2.title
-  end
-
+feature 'Posts Show' do
   scenario 'Displaying the post detail page', js: true do
     post = create :post
 

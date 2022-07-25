@@ -1,5 +1,5 @@
 import * as React from 'react';
-import renderComponent from './utils/renderComponent';
+import renderComponent from '../../utils/renderComponent';
 
 function PostsShow({ postId }) {
   const post = { user: {} };
