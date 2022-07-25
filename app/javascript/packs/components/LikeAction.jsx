@@ -4,8 +4,8 @@ import React from 'react';
 import LikeLink from './LikeLink';
 import LikeButton from './LikeButton';
 
-function LikeAction({ count, isLiked, isLogged, postId }) {
-  if (!isLogged) return <LikeLink count={count} />
+function LikeAction({ count, isLiked, isLoggedIn, postId }) {
+  if (!isLoggedIn) return <LikeLink count={count} />
 
   return (
     <LikeButton
@@ -19,7 +19,7 @@ function LikeAction({ count, isLiked, isLogged, postId }) {
 LikeAction.propTypes = {
   count: PropTypes.number.isRequired,
   isLiked: PropTypes.bool.isRequired,
-  isLogged: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
   postId: PropTypes.number.isRequired,
 };
 
