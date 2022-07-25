@@ -4,6 +4,7 @@ import LikeAction from './LikeAction';
 
 function Post({
   commentsCount,
+  forShow,
   isLiked,
   isLoggedIn,
   likesCount,
@@ -15,7 +16,7 @@ function Post({
   return (
     <article className="post">
       <h2>
-        <a href={`/posts/${postId}`}>{title}</a>
+        { forShow ? title : <a href={`/posts/${postId}`}>{title}</a> }
       </h2>
       <div className="url">
         <a href={url}>{url}</a>
@@ -36,6 +37,7 @@ function Post({
 
 Post.propTypes = {
   commentsCount: PropTypes.number.isRequired,
+  forShow: PropTypes.bool,
   isLiked: PropTypes.bool.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   likesCount: PropTypes.number.isRequired,
@@ -44,5 +46,9 @@ Post.propTypes = {
   title: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 };
+
+Post.defaultProps = {
+  forShow: false,
+}
 
 export default Post;

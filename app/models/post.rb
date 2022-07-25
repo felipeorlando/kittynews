@@ -37,6 +37,8 @@ class Post < ApplicationRecord
       .group('posts.id')
   }
 
+  scope :by_id_with_comments, -> (id) { includes(comments: [:user]).find(id) }
+
   def liked_by_current_user
     return nil unless self.respond_to?(:liked_by_caller)
     

@@ -7,8 +7,9 @@ feature 'Posts Show' do
     visit root_path
     click_on post.title
 
-    expect(page).to have_content 'comments'
-    expect(page).to have_content(post.title), 'Not implemented yet. Implement as part of task 2.'
-    expect(page).to have_content(post.tagline), 'Not implemented yet. Implement as part of task 2.'
+    expect(page).to have_content 'Comments'
+    expect(page).to have_content(post.title)
+    expect(page).to have_content(post.url)
+    expect(page).to have_content(post.tagline)
   end
 end

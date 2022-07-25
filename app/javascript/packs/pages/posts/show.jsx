@@ -1,35 +1,50 @@
 import * as React from 'react';
+import Post from '../../components/Post';
+import { usePostByIdQuery } from '../../graphql/queries/postById';
 import renderComponent from '../../utils/renderComponent';
 
 function PostsShow({ postId }) {
-  const post = { user: {} };
+  const { data, error, loading } = usePostByIdQuery(+postId);
+
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  const { postById: post, viewer } = data;
 
   return (
     <>
       <div className="box">
-        <strong>TODO: Show info about post with id {postId}.</strong>
-        <br />
-        <em>Find js file at "app/javascript/packs/posts-show.jsx"</em>
+        <Post
+          key={post.id}
+          commentsCount={post.commentsCount}
+          forShow
+          isLiked={post.likedByCurrentUser}
+          isLoggedIn={viewer !== null}
+          likesCount={post.likesCount}
+          postId={+post.id}
+          tagline={post.tagline}
+          title={post.title}
+          url={post.url}
+        />
       </div>
       <div className="box">
-        <article className="post">
-          <h2>
-            <a href={`/posts/${post.id}`}>{post.title}</a>
-          </h2>
-          <div className="url">
-            <a href={post.url} target="_blank">
-              {post.url}
-            </a>
+        <h3>Comments</h3>
+
+        {post.comments.map((comment) => (
+          <div className="comment" key={comment.id}>
+            <strong>{comment.user.name}</strong>
+            <p>{comment.text}</p>
           </div>
-          <div className="tagline">{post.tagline}</div>
-          <footer>
-            <button>🔼 0 </button> {post.commentsCount} comments | author:{' '}
-            {post.user.name}
-          </footer>
-        </article>
-      </div>
-      <div className="box">
-        <strong>TODO: Show post comments</strong>
+        ))}
+
+        <form className="comment">
+          <textarea
+            name="comment"
+            placeholder="Add a comment..."
+            rows={4}
+          />
+          <button className="submit">Add comment</button>
+        </form>
       </div>
     </>
   );

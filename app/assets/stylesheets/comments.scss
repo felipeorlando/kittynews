@@ -1,0 +1,60 @@
+.comment {
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 20px;
+
+  p {
+    margin: 4px 0 0;
+  }
+
+  textarea {
+    border: 1px solid #e8e8e8;
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    margin-top: 30px;
+    padding: 10px;
+    resize: none;
+    width: 100%;
+  }
+
+  .submit {
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #e8e8e8;
+    color: #999999;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    outline: none;
+    padding: 10px;
+    text-decoration: none;
+    width: 100%;
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: #e8e8e8;
+      }
+
+      &.liked {
+        background-color: #e8e8e8;
+        color: #000;
+      }
+
+      &:active {
+        background: #d4d4d4;
+      }
+    }
+
+    &:disabled {
+      cursor: no-drop;
+    }
+  }
+
+  & + & {
+    margin-top: 20px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+}
